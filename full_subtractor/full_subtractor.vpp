@@ -1,0 +1,71 @@
+#! /usr/local/iverilog/bin/vvp
+:ivl_version "11.0 (devel)" "(s20150603-642-g3bdb50da)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 9;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "vhdl_textio";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_00000000010ab6a0 .scope module, "full_subtractor_test" "full_subtractor_test" 2 2;
+ .timescale -8 -9;
+v00000000010f2510_0 .var "A", 0 0;
+v00000000010f2650_0 .var "B", 0 0;
+v00000000010f2b50_0 .net "Bo", 0 0, L_0000000001140030;  1 drivers
+v00000000010f2010_0 .var "C", 0 0;
+v00000000010f2c90_0 .net "D", 0 0, L_00000000010f3260;  1 drivers
+S_00000000010ae250 .scope module, "uut" "full_subtractor" 2 6, 3 1 0, S_00000000010ab6a0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "A";
+    .port_info 1 /INPUT 1 "B";
+    .port_info 2 /INPUT 1 "C";
+    .port_info 3 /OUTPUT 1 "Bo";
+    .port_info 4 /OUTPUT 1 "D";
+L_00000000010f31f0 .functor XOR 1, v00000000010f2510_0, v00000000010f2650_0, C4<0>, C4<0>;
+L_00000000010f3260 .functor XOR 1, L_00000000010f31f0, v00000000010f2010_0, C4<0>, C4<0>;
+L_00000000010f32d0 .functor AND 1, L_00000000010f3340, v00000000010f2010_0, C4<1>, C4<1>;
+L_00000000010f3340 .functor NOT 1, L_00000000010f31f0, C4<0>, C4<0>, C4<0>;
+L_00000000010f33b0 .functor AND 1, L_00000000010f3420, v00000000010f2650_0, C4<1>, C4<1>;
+L_00000000010f3420 .functor NOT 1, v00000000010f2510_0, C4<0>, C4<0>, C4<0>;
+L_0000000001140030 .functor OR 1, L_00000000010f32d0, L_00000000010f33b0, C4<0>, C4<0>;
+v00000000010ab830_0 .net "A", 0 0, v00000000010f2510_0;  1 drivers
+v00000000010ae3e0_0 .net "B", 0 0, v00000000010f2650_0;  1 drivers
+v00000000010ae480_0 .net "Bo", 0 0, L_0000000001140030;  alias, 1 drivers
+v00000000010ae520_0 .net "C", 0 0, v00000000010f2010_0;  1 drivers
+v00000000010ae5c0_0 .net "D", 0 0, L_00000000010f3260;  alias, 1 drivers
+v00000000010acc90_0 .net *"_s3", 0 0, L_00000000010f3340;  1 drivers
+v00000000010acd30_0 .net *"_s6", 0 0, L_00000000010f3420;  1 drivers
+v00000000010acdd0_0 .net "t1", 0 0, L_00000000010f31f0;  1 drivers
+v00000000010ace70_0 .net "t2", 0 0, L_00000000010f32d0;  1 drivers
+v00000000010f1d40_0 .net "t3", 0 0, L_00000000010f33b0;  1 drivers
+    .scope S_00000000010ab6a0;
+T_0 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000000010f2510_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000000010f2650_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000000010f2010_0, 0, 1;
+    %delay 20, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v00000000010f2510_0, 0, 1;
+    %delay 20, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v00000000010f2650_0, 0, 1;
+    %delay 20, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v00000000010f2010_0, 0, 1;
+    %delay 20, 0;
+    %end;
+    .thread T_0;
+    .scope S_00000000010ab6a0;
+T_1 ;
+    %vpi_call 2 19 "$monitor", "A=%d,B=%d,C=%d,D=%d,Bo=%d \012", v00000000010f2510_0, v00000000010f2650_0, v00000000010f2010_0, v00000000010f2c90_0, v00000000010f2b50_0 {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "full_subtractor_test.v";
+    "full_subtractor.v";
