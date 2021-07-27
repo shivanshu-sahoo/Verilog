@@ -1,0 +1,141 @@
+#! /usr/local/iverilog/bin/vvp
+:ivl_version "11.0 (devel)" "(s20150603-642-g3bdb50da)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "vhdl_textio";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0000000000fa7e10 .scope module, "RAM_test" "RAM_test" 2 1;
+ .timescale 0 0;
+v0000000000fb2780_0 .var "address", 9 0;
+v0000000000fb2aa0_0 .var "clk", 0 0;
+v0000000000fb1ec0_0 .var "data_in", 9 0;
+v0000000000fb2a00_0 .net "data_out", 9 0, L_00000000010dbe20;  1 drivers
+v0000000000fb21e0_0 .var/i "k", 31 0;
+v0000000000fb1f60_0 .var "select", 0 0;
+v0000000000fb2140_0 .var "write", 0 0;
+S_0000000000fb4d00 .scope module, "RAM" "ram" 2 7, 3 1 0, S_0000000000fa7e10;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 10 "data_out_1";
+    .port_info 1 /INPUT 10 "data_in_1";
+    .port_info 2 /INPUT 1 "clk";
+    .port_info 3 /INPUT 10 "address_1";
+    .port_info 4 /INPUT 1 "write_1";
+    .port_info 5 /INPUT 1 "chip_select_1";
+P_0000000000f83820 .param/l "ADDRESS_SIZE" 0 3 2, +C4<00000000000000000000000000001010>;
+P_0000000000f83858 .param/l "DATA_SIZE" 0 3 2, +C4<00000000000000000000000000001010>;
+P_0000000000f83890 .param/l "MEMORY_SIZE" 0 3 2, +C4<00000000000000000000010000000000>;
+L_00000000010dbe20 .functor BUFZ 10, L_0000000000fb2000, C4<0000000000>, C4<0000000000>, C4<0000000000>;
+v00000000010dbd80_0 .net *"_s0", 9 0, L_0000000000fb2000;  1 drivers
+v00000000010dcc30_0 .net *"_s2", 11 0, L_0000000000fb2b40;  1 drivers
+L_0000000001003028 .functor BUFT 1, C4<00>, C4<0>, C4<0>, C4<0>;
+v00000000010dccd0_0 .net *"_s5", 1 0, L_0000000001003028;  1 drivers
+v0000000000fa7fa0_0 .net "address_1", 9 0, v0000000000fb2780_0;  1 drivers
+v0000000000fa8040_0 .net "chip_select_1", 0 0, v0000000000fb1f60_0;  1 drivers
+v0000000000fb4e90_0 .net "clk", 0 0, v0000000000fb2aa0_0;  1 drivers
+v0000000000fb4f30_0 .net "data_in_1", 9 0, v0000000000fb1ec0_0;  1 drivers
+v0000000000fb4fd0_0 .net "data_out_1", 9 0, L_00000000010dbe20;  alias, 1 drivers
+v0000000000fb5070 .array "memory", 0 1023, 9 0;
+v0000000000fb1c90_0 .net "write_1", 0 0, v0000000000fb2140_0;  1 drivers
+o0000000000fba158 .functor BUFZ 1, C4<z>; HiZ drive
+v0000000000fb2820_0 .net "write_2", 0 0, o0000000000fba158;  0 drivers
+E_0000000000fa7910 .event posedge, v0000000000fb4e90_0;
+L_0000000000fb2000 .array/port v0000000000fb5070, L_0000000000fb2b40;
+L_0000000000fb2b40 .concat [ 10 2 0 0], v0000000000fb2780_0, L_0000000001003028;
+    .scope S_0000000000fb4d00;
+T_0 ;
+    %wait E_0000000000fa7910;
+    %load/vec4 v0000000000fb1c90_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %load/vec4 v0000000000fb4f30_0;
+    %load/vec4 v0000000000fa7fa0_0;
+    %pad/u 12;
+    %ix/vec4 4;
+    %store/vec4a v0000000000fb5070, 4, 0;
+T_0.0 ;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0000000000fa7e10;
+T_1 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000000000fb2aa0_0, 0, 1;
+    %end;
+    .thread T_1;
+    .scope S_0000000000fa7e10;
+T_2 ;
+    %delay 2, 0;
+    %load/vec4 v0000000000fb2aa0_0;
+    %inv;
+    %store/vec4 v0000000000fb2aa0_0, 0, 1;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_0000000000fa7e10;
+T_3 ;
+    %vpi_call 2 14 "$dumpfile", "ram.vcd" {0 0 0};
+    %vpi_call 2 15 "$dumpvars", 32'sb00000000000000000000000000000000, S_0000000000fa7e10 {0 0 0};
+    %end;
+    .thread T_3;
+    .scope S_0000000000fa7e10;
+T_4 ;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0000000000fb21e0_0, 0, 32;
+T_4.0 ;
+    %load/vec4 v0000000000fb21e0_0;
+    %cmpi/s 1023, 0, 32;
+    %flag_or 5, 4;
+    %jmp/0xz T_4.1, 5;
+    %load/vec4 v0000000000fb21e0_0;
+    %pad/s 10;
+    %store/vec4 v0000000000fb2780_0, 0, 10;
+    %load/vec4 v0000000000fb21e0_0;
+    %pad/s 10;
+    %store/vec4 v0000000000fb1ec0_0, 0, 10;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000000000fb2140_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000000000fb1f60_0, 0, 1;
+    %delay 4, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000000000fb2140_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000000000fb1f60_0, 0, 1;
+    %load/vec4 v0000000000fb21e0_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0000000000fb21e0_0, 0, 32;
+    %jmp T_4.0;
+T_4.1 ;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0000000000fb21e0_0, 0, 32;
+T_4.2 ;
+    %load/vec4 v0000000000fb21e0_0;
+    %cmpi/s 1023, 0, 32;
+    %flag_or 5, 4;
+    %jmp/0xz T_4.3, 5;
+    %load/vec4 v0000000000fb21e0_0;
+    %pad/s 10;
+    %store/vec4 v0000000000fb2780_0, 0, 10;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000000000fb2140_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000000000fb1f60_0, 0, 1;
+    %vpi_call 2 27 "$display", "Address: %5d, Data: %4d", v0000000000fb2780_0, v0000000000fb2a00_0 {0 0 0};
+    %delay 2, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000000000fb1f60_0, 0, 1;
+    %load/vec4 v0000000000fb21e0_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0000000000fb21e0_0, 0, 32;
+    %jmp T_4.2;
+T_4.3 ;
+    %vpi_call 2 30 "$finish" {0 0 0};
+    %end;
+    .thread T_4;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    ".\RAM_test.v";
+    ".\RAM.v";
